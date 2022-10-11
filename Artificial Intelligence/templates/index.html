@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Voice Controlled Notes App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
+  <link rel="stylesheet" href="/static/css/style_index.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.10.100/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.entry.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.10.100/pdf.worker.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="center">
+    <div class="container">
+
+      <h1 class="text"></h1>
+      <br>
+      <h3 class="no-browser-support">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In
+        Google Chrome.</h3>
+
+      <div class="app">
+        <div class="input-single">
+          <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition." rows="6"
+            cols="5"></textarea>
+        </div>
+        <br>
+        <div id="input-types">
+          <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+          <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
+          <button id="save-note-btn" title="Save Note">Save Note</button>
+          <button id="save-note-btn" title="Convert">Convert</button>
+          <label class="button" for="file-id">Upload File</label>
+          <input type="file" id="file-id" name="file_name" onchange="ExtractText();">
+
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <input type="text" id="text-yt" placeholder="Enter youtube link"> <br>
+
+
+        <button id="save-note-btn" title="transcript" onclick="ytToText()">Get Transcript</button>
+        <br><br><br><br>
+        <ul id="notes">
+          <li>
+            <p class="no-notes">You don't have any notes.</p>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js'></script>
+  <script src="static/js/index.js"></script>
+
+  <script>
+    var notes = getAllNotes();
+    renderNotes(notes);
+
+    function renderNotes(notes) {
+      var html = '';
+      if (notes.length) {
+        notes.forEach(function (note) {
+          html += `<div class="blog-slider">
+      <div class="blog-slider__wrp swiper-wrapper">
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            
+            <img src='/static/images/thomas-le-bPD4U-mqC44-unsplash.jpg' alt="">
+          </div>
+          <div class="blog-slider__content">
+            <span class="blog-slider__code">${note.date}</span>
+            <div class="blog-slider__text">${note.content}</div>
+            <a href="#" class="blog-slider__button-listen" >LISTEN TO NOTE</a>
+          </div>
+        </div>
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            <img src="/static/images/jon-tyson-hhq1Lxtuwd8-unsplash.jpg" alt="">
+          </div>
+          <div class="blog-slider__content">
+            <span class="blog-slider__code">${note.date}</span>
+            <div class="blog-slider__text">${note.content}</div>
+            <a href="#" class="blog-slider__button-question">QUESTION TYPE</a>
+          </div>
+        </div>
+        
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            <img src="https://images.unsplash.com/photo-1522544123513-8032a9b4e5d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+          </div>
+          <div class="blog-slider__content">
+            <span class="blog-slider__code">${note.date}</span>
+            <div class="blog-slider__text">${note.content}</div>
+            <a href="#" class="blog-slider__button-delete">DELETE</a>
+          </div>
+        </div>
+        
+      </div>
+      <div class="blog-slider__pagination"></div>
+    </div>
+    <br>
+    <br>`;
+        });
+      } else {
+        html = '<li><p class="content">You don\'t have any notes yet.</p></li>';
+      }
+      notesList.html(html);
+    }
+
+
+    function saveNote(dateTime, content) {
+      localStorage.setItem('note-' + dateTime, content);
+    }
+
+
+
+    function getAllNotes() {
+      var notes = [];
+      var key;
+      for (var i = 0; i < localStorage.length; i++) {
+        key = localStorage.key(i);
+        console.log(i)
+        console.log(key)
+
+        if (key.substring(0, 5) == 'note-') {
+          notes.push({
+            date: key.replace('note-', ''),
+            content: localStorage.getItem(localStorage.key(i))
+          });
+        }
+      }
+      console.log(notes)
+      return notes;
+    }
+
+
+    function deleteNote(dateTime) {
+      localStorage.removeItem('note-' + dateTime);
+    }
+
+
+
+
+
+
+    // function convertToText(dateTime) {
+    //     var text = localStorage.getItem('note-' + dateTime);
+    //     console.log(text);
+    //     let data = {
+    //         "text": text,
+    //         "date": dateTime
+    //     }
+
+    //     $.ajax({
+    //         url: '/convert',
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: data,
+    //         success: function (response) {
+
+    //             console.log(response);
+    //         },
+    //         error: function (error) {
+    //             console.log(error);
+    //         }
+    //     });
+
+    // }
+
+
+
+    var datass = '';
+    var DataArr = [];
+    PDFJS.workerSrc = '';
+
+    function ExtractText() {
+      var input = document.getElementById("file-id");
+      var fReader = new FileReader();
+      fReader.readAsDataURL(input.files[0]);
+      // console.log(input.files[0]);
+      fReader.onloadend = function (event) {
+        convertDataURIToBinary(event.target.result);
+      }
+    }
+
+    var BASE64_MARKER = ';base64,';
+
+    function convertDataURIToBinary(dataURI) {
+
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+      var base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+      for (var i = 0; i < rawLength; i++) {
+        array[i] = raw.charCodeAt(i);
+      }
+      pdfAsArray(array)
+
+    }
+
+    function getPageText(pageNum, PDFDocumentInstance) {
+      // Return a Promise that is solved once the text of the page is retrieven
+      return new Promise(function (resolve, reject) {
+        PDFDocumentInstance.getPage(pageNum).then(function (pdfPage) {
+          // The main trick to obtain the text of the PDF page, use the getTextContent method
+          pdfPage.getTextContent().then(function (textContent) {
+            var textItems = textContent.items;
+            var finalString = "";
+
+            // Concatenate the string of the item to the final string
+            for (var i = 0; i < textItems.length; i++) {
+              var item = textItems[i];
+
+              finalString += item.str + "";
+            }
+
+            // Solve promise with the text retrieven from the page
+            resolve(finalString);
+          });
+        });
+      });
+    }
+
+    function pdfAsArray(pdfAsArray) {
+
+      PDFJS.getDocument(pdfAsArray).then(function (pdf) {
+
+        var pdfDocument = pdf;
+        // Create an array that will contain our promises
+        var pagesPromises = [];
+
+        for (var i = 0; i < pdf.pdfInfo.numPages; i++) {
+          // Required to prevent that i is always the total of pages
+          (function (pageNumber) {
+            // Store the promise of getPageText that returns the text of a page
+            pagesPromises.push(getPageText(pageNumber, pdfDocument));
+          })(i + 1);
+        }
+
+        // Execute all the promises
+        Promise.all(pagesPromises).then(function (pagesText) {
+
+          // Display text of all the pages in the console
+          // e.g ["Text content page 1", "Text content page 2", "Text content page 3" ... ]
+          console.log(pagesText); // representing every single page of PDF Document by array indexing
+          console.log(pagesText.length);
+          var outputStr = "";
+          for (var pageNum = 0; pageNum < pagesText.length; pageNum++) {
+            console.log(pagesText[pageNum]);
+            outputStr = "";
+            outputStr = "";
+
+            var div = document.getElementById('note-textarea');
+
+            div.innerHTML += (outputStr + pagesText[pageNum]);
+
+          }
+
+
+
+
+        });
+
+      }, function (reason) {
+        // PDF loading error
+        console.error(reason);
+      });
+    }
+    function ytToText() {
+      var link = document.getElementById('text-yt').value;
+      let data = {
+        "link": link,
+        "type": 'link'
+      }
+      $.ajax({
+        url: '/ytToText',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        success: function (response) {
+          var div = document.getElementById('note-textarea');
+          div.innerHTML += (response['message']);
+          console.log(response)
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+
+    }
+  </script>
+  <script src="static/js/index.js"></script>
+
+
+
+</body>
+
+</html>

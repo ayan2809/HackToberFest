@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+    <link rel="stylesheet" href="/static/css/questions.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Choose your Question Type</h2>
+
+        <div>
+            <input type="checkbox" id="mcq" name="questionType" onClick="ckChange(this)">
+            <label for="mcq">MCQ</label>
+        </div>
+
+        <div>
+            <input type="checkbox" id="faq" name="questionType" onClick="ckChange(this)">
+            <label for="faq">FAQ</label>
+        </div>
+
+        <div>
+            <input type="checkbox" id="paraphrasing" name="questionType" onClick="ckChange(this)">
+            <label for="paraphrasing">Paraphrasing</label>
+        </div>
+
+        <div>
+            <input type="checkbox" id="boolean" name="questionType" onClick="ckChange(this)">
+            <label for="boolean">Boolean</label>
+        </div>
+
+        <p id="warning" class="warning" name="warning"></p>
+        <button type="button" class="submit-xD" id="signup_form_button" value="submit_a" onclick="convertToText()">Submit</button>
+
+        <div class="list" id="list"></div>
+
+
+        <script>
+            url = window.location.href;
+            console.log(url);
+            var myParam = location.search.split('myvar=')[1] ? location.search.split('myvar=')[1] : 'Hello';
+            console.log(myParam);
+            var decoded = decodeURI(myParam).replace(/\+/g, ' ')
+            console.log(decoded)
+            document.getElementById("text").innerHTML = decoded;
+            let data = {
+                "text": decoded
+            }
+
+            function ckChange(el) {
+                var x = []
+                var ckName = document.getElementsByName(el.name);
+                for (var i = 0, c; c = ckName[i]; i++) {
+                    c.disabled = !(!el.checked || c === el);
+                    if (!c.disabled) {
+                        x.push(i);
+                        // console.log(i);
+                    }
+                }
+                if (x.length == 1)
+                    console.log(x[0]);
+
+            }
+
+            function convertToText() {
+                var x = []
+                var ckName = document.getElementsByName("questionType");
+                for (var i = 0, c; c = ckName[i]; i++) {
+                    // c.disabled = !(!el.checked || c === el);
+                    if (!c.disabled) {
+                        x.push(i);
+                        // console.log(i);
+                    }
+                }
+                if (x.length == 1)
+                    console.log(x[0]);
+                else {
+                    document.getElementById("warning").innerHTML = "Please Select a question Type";
+                    return;
+                }
+
+                let data = {
+                    "text": decoded,
+                    "type": x[0]
+                }
+
+                $.ajax({
+                    url: '/convert',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function(response) {
+
+                        if (x[0] == 0) {
+                            var ques = 'output';
+                            var html = '';
+                            console.log(response);
+
+                            for (var i = 0; i < response[ques].length; i++) {
+                                console.log(response[ques][i]);
+                                for (var j = 0; j < response[ques][i].questions.length; j++) {
+                                    html += `<div class="w3-panel w3-card">
+                                    <p id="question" class="question" name="question">${response[ques][i].questions[j].question_statement}</p>
+                                <p id="option1" class="option1" name="option1">${response[ques][i].questions[j].options[1]}</p>
+                                <p id="option2" class="option2" name="option2">${response[ques][i].questions[j].options[2]}</p>
+                                <p id="option3" class="option3" name="option3">${response[ques][i].questions[j].answer}</p>
+                                <p id="option4" class="option4" name="option4">${response[ques][i].questions[j].options[0]}</p><br></div>`;
+                                }
+                            }
+                            document.getElementById("list").innerHTML = html;
+
+
+                        }
+                        if (x[0] == 1) {
+                            var ques = 'output';
+                            var html = '';
+                            console.log(response);
+                            for (var i = 0; i < response[ques].length; i++) {
+                                console.log(response[ques][i]);
+                                for (var j = 0; j < response[ques][i].questions.length; j++) {
+                                    html += `<div class="w3-panel w3-card"><p id="question" class="question" name="question">${response[ques][i].questions[j].Question}</p>
+                                <p id="option1" class="option1" name="option1">${response[ques][i].questions[j].Answer}</p>
+                                <br></div>`;
+                                }
+                            }
+                            document.getElementById("list").innerHTML = html;
+
+                        } else if (x[0] == 2) {
+                            console.log(response)
+                            var html = '';
+                            var ques = 'Paraphrased Questions';
+                            var qq = 'output';
+                            for (var i = 0; i < response[qq].length; i++) {
+                                console.log(response[qq][i]);
+                                for (var j = 0; j < response[qq][i][ques].length; j++) {
+                                    html += `<div class="w3-panel w3-card"><p id="question" class="question" name="question">${response[qq][i][ques][j].substring(18)}</p>
+                                <textarea id="text1" name="text1" rows="2" cols="50"></textarea>
+                                <br></div>`;
+                                }
+                            }
+                            document.getElementById("list").innerHTML = html;
+                        } else if (x[0] == 3) {
+                            var html = '';
+                            var ques = 'Boolean Questions';
+                            console.log(response);
+                            var qq = 'output';
+                            for (var i = 0; i < response[qq].length; i++) {
+                                console.log(response[qq][i]);
+                                for (var j = 0; j < response[qq][i][ques].length; j++) {
+                                    html += `<div class="w3-panel w3-card"><p id="question" class="question" name="question">${response[qq][i][ques][j]}</p>
+                                <p id="option1" class="option1" name="option1">True</p>
+                                <p id="option1" class="option2" name="option1">False</p>
+                                <br></div>`;
+                                }
+                            }
+                            document.getElementById("list").innerHTML = html;
+
+                        }
+
+                        // console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+
+            }
+        </script>
+</body>
+
+</html>
