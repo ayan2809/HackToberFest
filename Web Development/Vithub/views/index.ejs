@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>VITHUB- A portal for study materials</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <link type="text/css" rel="stylesheet"href="css/login_styles.css" />
+    <link type="text/css" rel="stylesheet"href="css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" href="index.ejs">VITHUB </a>
+
+        </div>
+    </nav>
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.png" class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <% if (message.length > 0) { %>
+                        <div class="alert alert-danger col-sm-12"><%= message %></div>
+                        <% } %>
+                    <form action="login" method="POST">
+
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email"  name="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" required/>
+                            <label class="form-label" for="form3Example3"></label>
+                        </div>
+                        
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" id="form3Example3" class="form-control form-control-lg" name="username" placeholder="Enter Username"required />
+                            <label class="form-label" for="form3Example3"></label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" name="password"  id="form3Example4" class="form-control form-control-lg" placeholder="Enter password"required />
+                            <label class="form-label" for="form3Example4"></label>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Checkbox -->
+                            <div class="form-check mb-0">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                                <label class="form-check-label" for="form2Example3">
+                      Remember me
+                    </label>
+                            </div>
+                            <a href="#!" class="text-body">Forgot password?</a>
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="register" class="link-danger">Register</a></p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto">
+                        <div class="small m-0 text-white">Made with ❤️ for all the VITIANS</div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </section>
+</body>
+
+</html>

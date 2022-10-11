@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>VITHUB- A portal for study materials</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <link type="text/css" rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="/dashboard">VITHUB </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#upload">Upload</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <%=username%>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li><a class="dropdown-item" href="/logout"> Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center">
+                    <div class="col-lg-8 col-xl-7 col-xxl-6">
+                        <div class="my-5 text-center text-xl-start">
+                            <h1 class="display-5 fw-bolder text-white mb-2">A Portal to get access to study materials of
+                                the core subjects</h1>
+                            <p class="lead fw-normal text-white-50 mb-4">Build a community by providing and accessing
+                                best resources to and from the peers! Happy Learning!</p>
+                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5"
+                            src="assets\main.png" alt="..." /></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="py-5" id="features">
+            <div class="container px-5 my-5">
+                <div class="row gx-5">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h2 class="fw-bolder mb-0">A better way to start learning.</h2>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="row gx-5 row-cols-1 row-cols-md-2">
+                            <div class="col mb-5 h-100">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
+                                        class="bi bi-collection"></i></div>
+                                <h2 class="h5">Upload/ View Files </h2>
+                                <p class="mb-0">Think you have got the best handmade notes, upload them here and let all
+                                    the peers and juniors benefit from it.</p>
+                            </div>
+                            <div class="col mb-5 h-100">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
+                                        class="bi bi-building"></i></div>
+                                <h2 class="h5">Faculty Access </h2>
+                                <p class="mb-0">Even the faculties can access and upload extra notes that are not in
+                                    syllabus.</p>
+                            </div>
+                            <div class="col mb-5 mb-md-0 h-100">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
+                                        class="bi bi-toggles2"></i></div>
+                                <h2 class="h5">Multidisciplinary Approach</h2>
+                                <p class="mb-0">Anyone can access any material irrespective of their course and branch.
+                                </p>
+                            </div>
+                            <div class="col h-100">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
+                                        class="bi bi-toggles2"></i></div>
+                                <h2 class="h5">Tutorial Videos</h2>
+                                <p class="mb-0">One can uplaod videos explaining concepts and feed their appetite for
+                                    teaching.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5" id="upload">
+            <div class="container px-5 my-5">
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6">
+                        <div class="text-center">
+                            <h2 class="fw-bolder">Courses</h2>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-70 shadow border-0">
+                            <img class="card-img-top" src="assets\cs.png" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">Explore</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="/dashboard/cs">
+                                    <h5 class="card-title mb-3">Computer Science</h5>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-70 shadow border-0">
+                            <img class="card-img-top" src="assets\electronics.png" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">Explore</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="#!">
+                                    <h6 class="card-title mb-3">Electronics and Communication</h6>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-70 shadow border-0">
+                            <img class="card-img-top" src="assets\electrical.png" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">Explore</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="#!">
+                                    <h5 class="card-title mb-3">Electrical Engineering</h5>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-5">
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-70 shadow border-0">
+                            <img class="card-img-top" src="assets\mech.png" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">Explore</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="#!">
+                                    <h5 class="card-title mb-3">Mechanical Engineering</h5>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-70 shadow border-0">
+                            <img class="card-img-top" src="assets\civil.png" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">Explore</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="#!">
+                                    <h6 class="card-title mb-3">Civil Engineering</h6>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-70 shadow border-0">
+                            <img class="card-img-top" src="assets\fash.png" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">Explore</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="#!">
+                                    <h5 class="card-title mb-3">Fashion Tech</h5>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to action-->
+                <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
+                    <div
+                        class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
+                        <div class="mb-4 mb-xl-0">
+                            <div class="fs-3 fw-bold text-white"> Learn.Share.Grow</div>
+                            <div class="text-white-50">Provide your reviews to us and help us improve.</div>
+                        </div>
+                        <div class="ms-xl-4">
+                            <div class="input-group mb-2">
+                                <input class="form-control" type="text" placeholder="Type Something..."
+                                    aria-label="Email address..." aria-describedby="button-newsletter" />
+                                <button class="btn btn-outline-light" id="button-newsletter"
+                                    type="button">Ideas!</button>
+                            </div>
+                            <div class="small text-white-50">Your ideas are our priorities</div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Made with ❤️ for all the VITIANS</div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="/js/scripts.js"></script>
+</body>
+
+</html>
